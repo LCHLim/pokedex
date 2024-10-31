@@ -4,6 +4,7 @@ import {
   getPokemonList,
   getPokemonId,
   getPokemonImageUrlById,
+  Pokemon
 } from "@/lib/pokeAPI";
 
 export default async function Home() {
@@ -18,7 +19,7 @@ export default async function Home() {
         <Input className="w-1/2" placeholder="Pikachu, Greninja, etc." />
       </div>
       <div className="grid grid-cols-1 place-items-center gap-x-12 gap-y-10  min-[500px]:grid-cols-2 min-[700px]:grid-cols-3 min-[800px]:grid-cols-4 lg:grid-cols-5">
-        {pokemons.map((p) => {
+        {pokemons.map((p: Pokemon) => {
           const pokemonId = getPokemonId(p);
           const imageUrl = getPokemonImageUrlById(pokemonId);
           return (
