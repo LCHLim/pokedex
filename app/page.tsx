@@ -1,36 +1,50 @@
-import { Input } from "@/components/ui/input";
-import InfoCard from "@/components/infoCard";
+import Search from "@/components/search";
 import {
-  getPokemonList,
-  getPokemonId,
-  getPokemonImageUrlById,
-  Pokemon
-} from "@/lib/pokeAPI";
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import InfoCardGroup from "@/components/infoCardGroup";
 
-export default async function Home() {
-  const offset = 0;
-  const limit = 40;
-  const pokemons = await getPokemonList(limit, offset);
+export default async function Home(props: {
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+  }>;
+}) {
+  // to do
+  // pagination, detail
+
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
 
   return (
     //grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]
     <div className="flex flex-col justify-center px-32 py-8">
-      <div className="mb-8 flex justify-center">
-        <Input className="w-1/2" placeholder="Pikachu, Greninja, etc." />
-      </div>
-      <div className="grid grid-cols-1 place-items-center gap-x-12 gap-y-10  min-[500px]:grid-cols-2 min-[700px]:grid-cols-3 min-[800px]:grid-cols-4 lg:grid-cols-5">
-        {pokemons.map((p: Pokemon) => {
-          const pokemonId = getPokemonId(p);
-          const imageUrl = getPokemonImageUrlById(pokemonId);
-          return (
-            <InfoCard
-              name={p.name}
-              id={pokemonId}
-              key={pokemonId}
-              imageUrl={imageUrl}
-            />
-          );
-        })}
+      <Search placeholder="Pikachu, Greninja, etc." />
+      <InfoCardGroup query={query} currentPage={currentPage} />
+      <div className="pt-8">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href="#" />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#">1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext href="#" />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );
