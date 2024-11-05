@@ -4,7 +4,7 @@ const POKEMON_API = "https://pokeapi.co/api/v2";
 const POKEMON_IMG_URL =
   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon";
 const ITEMS_PER_PAGE = 20;
-const MAX_POKEMON_COUNT = 1302;
+const MAX_POKEMON_COUNT = 1025;
 
 export interface Pokemon {
   name: string;
@@ -12,14 +12,15 @@ export interface Pokemon {
 }
 
 async function findPokemonsByName(query: string) {
-  if (!query) return [];
-
-  const formattedQuery = query.toLowerCase();
-
   const allPokemons = (
-    await axios.get(`${POKEMON_API}/pokemon?limit=${MAX_POKEMON_COUNT}`)
+    await axios.get(
+      `${POKEMON_API}/pokemon?limit=${MAX_POKEMON_COUNT}&offset=0`,
+    )
   ).data.results;
 
+  if (!query) return allPokemons;
+
+  const formattedQuery = query.toLowerCase();
   const matchedPokemons = allPokemons.filter((p: Pokemon) =>
     p.name.toLowerCase().startsWith(formattedQuery),
   );
@@ -30,15 +31,8 @@ async function findPokemonsByName(query: string) {
 export async function getFilteredPokemons(query: string, currentPage: number) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
-  if (query) {
-    const matchedPokemons = await findPokemonsByName(query);
-    return matchedPokemons.slice(offset, offset + ITEMS_PER_PAGE);
-  } else {
-    const response = await axios.get(
-      `${POKEMON_API}/pokemon?limit=${ITEMS_PER_PAGE}&offset=${offset}`,
-    );
-    return response.data.results;
-  }
+  const matchedPokemons = await findPokemonsByName(query);
+  return matchedPokemons.slice(offset, offset + ITEMS_PER_PAGE);
 }
 
 export async function getPages(query: string) {
@@ -48,10 +42,7 @@ export async function getPages(query: string) {
     const matchedPokemons = await findPokemonsByName(query);
     resultCount = matchedPokemons.length;
   } else {
-    const response = await axios.get(
-      `${POKEMON_API}/pokemon?limit=${ITEMS_PER_PAGE}`,
-    );
-    resultCount = response.data.count;
+    resultCount = MAX_POKEMON_COUNT;
   }
 
   const totalPages = Math.ceil(resultCount / ITEMS_PER_PAGE);
