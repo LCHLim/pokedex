@@ -12,11 +12,12 @@ export interface Pokemon {
 }
 
 async function findPokemonsByName(query: string) {
-  const allPokemons = (
-    await axios.get(
-      `${POKEMON_API}/pokemon?limit=${MAX_POKEMON_COUNT}&offset=0`,
-    )
-  ).data.results;
+  const response = await fetch(
+    `${POKEMON_API}/pokemon?limit=${MAX_POKEMON_COUNT}&offset=0`,
+    { cache: "force-cache" },
+  ).then((res) => res.json());
+  
+  const allPokemons = response.results;
 
   if (!query) return allPokemons;
 
