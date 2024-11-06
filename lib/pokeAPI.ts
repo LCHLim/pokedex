@@ -1,5 +1,3 @@
-import axios from "axios";
-
 const POKEMON_API = "https://pokeapi.co/api/v2";
 const POKEMON_IMG_URL =
   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon";
@@ -16,7 +14,7 @@ async function findPokemonsByName(query: string) {
     `${POKEMON_API}/pokemon?limit=${MAX_POKEMON_COUNT}&offset=0`,
     { cache: "force-cache" },
   ).then((res) => res.json());
-  
+
   const allPokemons = response.results;
 
   if (!query) return allPokemons;

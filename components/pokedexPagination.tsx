@@ -20,35 +20,61 @@ export default function PokedexPagination({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
+  const allPages = generatePagination(currentPage, totalPages);
 
-  const createPageURL = (pageNumber: number | string) => {
+  function createPageURL(pageNumber: number | string) {
     const params = new URLSearchParams(searchParams);
     params.set("page", pageNumber.toString());
     return `${pathname}?${params.toString()}`;
-  };
+  }
 
-  const allPages = generatePagination(currentPage, totalPages);
+  function renderPageNumbers() {
+    const pageNumbers = allPages.map((p, index) => {
+      let item;
+
+      if (p === "...") {
+        item = <PaginationEllipsis />;
+      } else {
+        item = (
+          <PaginationLink href={createPageURL(p)} isActive={p === currentPage}>
+            {p}
+          </PaginationLink>
+        );
+      }
+
+      return <PaginationItem key={index}>{item}</PaginationItem>;
+    });
+    return pageNumbers;
+  }
 
   return (
     <div className="mt-8">
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious href={createPageURL(currentPage - 1)} />
+            <PaginationPrevious
+              href={createPageURL(currentPage - 1)}
+              aria-disabled={currentPage <= 1}
+              tabIndex={currentPage <= 1 ? -1 : undefined}
+              className={
+                currentPage <= 1 ? "pointer-events-none opacity-50" : undefined
+              }
+            />
           </PaginationItem>
 
-          {allPages.map((p, index) => {
-            let item = (
-              <PaginationLink href={createPageURL(p)}>{p}</PaginationLink>
-            );
-
-            if (p === "...") item = <PaginationEllipsis />;
-
-            return <PaginationItem key={index}>{item}</PaginationItem>;
-          })}
+          {renderPageNumbers()}
 
           <PaginationItem>
-            <PaginationNext href={createPageURL(currentPage + 1)} />
+            <PaginationNext
+              href={createPageURL(currentPage + 1)}
+              aria-disabled={currentPage >= totalPages}
+              tabIndex={currentPage >= totalPages ? -1 : undefined}
+              className={
+                currentPage >= totalPages
+                  ? "pointer-events-none opacity-50"
+                  : undefined
+              }
+            />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
