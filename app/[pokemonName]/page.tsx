@@ -34,17 +34,17 @@ export default async function Page({
           </p>
         </div>
 
-        <div className="my-8">
+        <div className="my-8 flex flex-col gap-3">
           {pokemon.stats.map((s: any) => {
             const statName = s.stat.name;
             const statValue = s.base_stat;
 
             return (
-              <div key={statName} className="flex items-stretch">
-                <p className="w-1/2">
+              <div key={statName} className="lg:flex lg:items-stretch">
+                <p className="lg:w-1/2">
                   {statName}: {statValue}
                 </p>
-                <Progress className="m-auto w-1/2" value={statValue} />
+                <Progress className="m-auto lg:w-1/2" value={statValue} />
               </div>
             );
           })}
