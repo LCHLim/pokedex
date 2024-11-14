@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { Pokemon } from "./definitions";
 
 const POKEMON_API = "https://pokeapi.co/api/v2";
@@ -46,10 +47,17 @@ export async function getPages(query: string) {
 }
 
 export async function getPokemonDetailById(id: number) {
-  const response = await fetch(`${POKEMON_API}/pokemon/${id}`).then((res) =>
-    res.json(),
-  );
-  return response;
+  try {
+    if (id > MAX_POKEMON_COUNT) throw new Error(`Pokemon with id ${id} not found.`);
+
+    const response = await fetch(`${POKEMON_API}/pokemon/${id}`).then((res) =>
+      res.json(),
+    );
+    return response;
+  } catch (e) {
+    console.error(e);
+    redirect("/");
+  }
 }
 
 export function getPokemonImageUrlById(id: number): string {
