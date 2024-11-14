@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { Pokemon } from "./definitions";
+import type { Pokemon } from "./definitions";
 
 const POKEMON_API = "https://pokeapi.co/api/v2";
 const POKEMON_IMG_URL =

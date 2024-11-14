@@ -1,7 +1,7 @@
 import { getPokemonId, getPokemonImageUrlById } from "@/lib/pokeAPI";
 import InfoCard from "@/components/infoCard";
 import { getFilteredPokemons } from "@/lib/pokeAPI";
-import { Pokemon } from "@/lib/definitions";
+import type { Pokemon } from "@/lib/definitions";
 
 export default async function InfoCardGroup({
   query,

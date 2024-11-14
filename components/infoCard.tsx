@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-import { InfoCardProps } from "@/lib/definitions";
+import type { InfoCardProps } from "@/lib/definitions";
 import Link from "next/link";
 
 export default function InfoCard({ name, id, imageUrl }: InfoCardProps) {
