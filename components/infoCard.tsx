@@ -8,7 +8,7 @@ export default function InfoCard({ name, id, imageUrl }: InfoCardProps) {
     <Card className="w-full">
       <CardContent className="p-4 text-center">
         <div className="flex justify-center">
-          <Link href={name}>
+          <Link href={id.toString()}>
             <Image
               src={imageUrl}
               width={80}
@@ -19,12 +19,11 @@ export default function InfoCard({ name, id, imageUrl }: InfoCardProps) {
           </Link>
         </div>
         <p className="text-sm text-gray-500">#{id}</p>
-        <Link href={name}>
+        <Link href={id.toString()}>
           <p className="font-bold capitalize text-blue-800 hover:text-red-800 hover:underline">
             {name}
           </p>
         </Link>
-        <p>type</p>
       </CardContent>
     </Card>
   );

@@ -4,7 +4,7 @@ const POKEMON_API = "https://pokeapi.co/api/v2";
 const POKEMON_IMG_URL =
   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon";
 const ITEMS_PER_PAGE = 20;
-const MAX_POKEMON_COUNT = 1025;
+export const MAX_POKEMON_COUNT = 1025;
 
 async function findPokemonsByName(query: string) {
   const response = await fetch(
@@ -45,8 +45,8 @@ export async function getPages(query: string) {
   return totalPages;
 }
 
-export async function getPokemonDetailByName(name: string) {
-  const response = await fetch(`${POKEMON_API}/pokemon/${name}`).then((res) =>
+export async function getPokemonDetailById(id: number) {
+  const response = await fetch(`${POKEMON_API}/pokemon/${id}`).then((res) =>
     res.json(),
   );
   return response;
