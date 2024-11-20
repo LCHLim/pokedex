@@ -13,7 +13,7 @@ export default async function InfoCardGroup({
   const pokemons = await getFilteredPokemons(query, currentPage);
 
   return (
-    <div className="grid grid-cols-1 place-items-center gap-x-12 gap-y-10 min-[500px]:grid-cols-2 min-[700px]:grid-cols-3 min-[800px]:grid-cols-4 lg:grid-cols-5">
+    <div className="grid grid-cols-2 place-items-center gap-x-4 gap-y-10 min-[700px]:grid-cols-3 min-[700px]:gap-x-8 min-[800px]:grid-cols-4 lg:grid-cols-5">
       {pokemons.map((p: ListResult) => {
         const pokemonId = getPokemonId(p);
         const imageUrl = getPokemonImageUrlById(pokemonId);
