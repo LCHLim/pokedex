@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { Progress } from "@/components/ui/progress";
+import type { Pokemon, PokemonStat } from "@/lib/definitions";
 
-export default function PokemonDetail({ pokemon }: { pokemon: any }) {
+export default function PokemonDetail({ pokemon }: { pokemon: Pokemon }) {
   function renderStats() {
-    return pokemon.stats.map((s: any) => {
+    return pokemon.stats.map((s: PokemonStat) => {
       const statName = s.stat.name;
       const statValue = s.base_stat;
 

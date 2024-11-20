@@ -1,7 +1,7 @@
 import { getPokemonId, getPokemonImageUrlById } from "@/lib/pokeAPI";
 import InfoCard from "@/components/infoCard";
 import { getFilteredPokemons } from "@/lib/pokeAPI";
-import type { Pokemon } from "@/lib/definitions";
+import type { ListResult } from "@/lib/definitions";
 
 export default async function InfoCardGroup({
   query,
@@ -14,7 +14,7 @@ export default async function InfoCardGroup({
 
   return (
     <div className="grid grid-cols-1 place-items-center gap-x-12 gap-y-10 min-[500px]:grid-cols-2 min-[700px]:grid-cols-3 min-[800px]:grid-cols-4 lg:grid-cols-5">
-      {pokemons.map((p: Pokemon) => {
+      {pokemons.map((p: ListResult) => {
         const pokemonId = getPokemonId(p);
         const imageUrl = getPokemonImageUrlById(pokemonId);
         return (

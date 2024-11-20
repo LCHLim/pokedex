@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import type { Pokemon } from "./definitions";
+import type { ListResult } from "./definitions";
 
 const POKEMON_API = "https://pokeapi.co/api/v2";
 const POKEMON_IMG_URL =
@@ -18,7 +18,7 @@ async function findPokemonsByName(query: string) {
   if (!query) return allPokemons;
 
   const formattedQuery = query.toLowerCase();
-  const matchedPokemons = allPokemons.filter((p: Pokemon) =>
+  const matchedPokemons = allPokemons.filter((p: ListResult) =>
     p.name.toLowerCase().startsWith(formattedQuery),
   );
 
@@ -64,6 +64,6 @@ export function getPokemonImageUrlById(id: number): string {
   return `${POKEMON_IMG_URL}/${id}.png`;
 }
 
-export function getPokemonId(pokemon: Pokemon): number {
+export function getPokemonId(pokemon: ListResult): number {
   return Number(pokemon.url.split("/")[6]);
 }
